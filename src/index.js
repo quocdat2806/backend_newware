@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
-// const { createServer } = require("node:http");
-// const server = createServer(app);
+const { createServer } = require("node:http");
+const server = createServer(app);
 const io = require("socket.io")(app);
 const mongoose = require("mongoose");
 const cors = require("cors");
