@@ -1,6 +1,5 @@
 const express = require("express");
 const app = express();
-const { initializeApp } = require("firebase-admin/app");
 const { createServer } = require("node:http");
 const server = createServer(app);
 const io = require("socket.io")(server);
