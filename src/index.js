@@ -1,8 +1,8 @@
 const express = require("express");
 const app = express();
-const { createServer } = require("node:http");
-const server = createServer(app);
-const io = require("socket.io")(server);
+// const { createServer } = require("node:http");
+// const server = createServer(app);
+// const io = require("socket.io")(server);
 const mongoose = require("mongoose");
 const cors = require("cors");
 const bodyParser = require("body-parser");
@@ -11,7 +11,6 @@ app.use(bodyParser.json());
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
 mongoose.set("strictQuery", false);
-initializeApp();
 const Schema = mongoose.Schema;
 const cartSchema = new Schema(
   {
@@ -72,19 +71,19 @@ try {
 const Cart = mongoose.model("Cart", cartSchema);
 const Notification = mongoose.model("Notification", notificationSchema);
 
-io.on("connection", (client) => {
-  let couter = 0;
-  console.log("connect from client");
-  client.on("disconnect", () => console.log("disconnet from client"));
-  client.on("viewNotification", () => {
-    couter = 0;
-    return client.emit("notificationCouter", `${couter}`);
-  });
-  client.on("checkoutCart", () => {
-    couter++;
-    return client.emit("notificationCouter", `${couter}`);
-  });
-});
+// io.on("connection", (client) => {
+//   let couter = 0;
+//   console.log("connect from client");
+//   client.on("disconnect", () => console.log("disconnet from client"));
+//   client.on("viewNotification", () => {
+//     couter = 0;
+//     return client.emit("notificationCouter", `${couter}`);
+//   });
+//   client.on("checkoutCart", () => {
+//     couter++;
+//     return client.emit("notificationCouter", `${couter}`);
+//   });
+// });
 app.post("/addToCart", async (req, res) => {
   try {
     const productId = req.body.productEntity.id;
@@ -195,4 +194,4 @@ app.get("/cart/:userId", (req, res) => {
   );
 });
 
-server.listen(port, () => console.log(`listen at ${port}`));
+app.listen(port, () => console.log(`listen at ${port}`));
